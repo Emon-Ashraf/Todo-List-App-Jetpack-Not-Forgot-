@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Todo List</string>
     <string name="app_tittle_top">Not Forgot</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="incomplete_status">Incomplete</string>
+    <string name="completed_status">Completed</string>
+    <string name="add_task_inputscreen">Add Task</string>
+    <string name="back">Back</string>
+    <string name="title_lebel">Title</string>
+    <string name="description_lebel">Description</string>
+    <string name="select_date_lebel">Select Date</string>
+    <string name="save_button_text">Save</string>
+    <string name="edit_task_level">Edit Task</string>
+    <string name="deadline_lebel">Deadline</string>
 </resources>

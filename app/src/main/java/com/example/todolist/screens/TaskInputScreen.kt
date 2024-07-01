@@ -13,9 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.todolist.R
 import com.example.todolist.data.Priority
 import com.example.todolist.data.Task
 import com.example.todolist.viewmodel.TaskViewModel
@@ -47,10 +49,13 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Add Task") },
+                title = { Text(stringResource(R.string.add_task_inputscreen)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = stringResource(
+                            R.string.back
+                        )
+                        )
                     }
                 }
             )
@@ -67,7 +72,7 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
                 TextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Title") },
+                    label = { Text(stringResource(R.string.title_lebel)) },
                     modifier = Modifier
                         .fillMaxWidth(),
                     colors = TextFieldDefaults.colors(
@@ -86,7 +91,7 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
                         descriptionLength = it.length
                         showError = descriptionLength > 50
                     },
-                    label = { Text("Description") },
+                    label = { Text(stringResource(R.string.description_lebel)) },
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 4,
                     isError = showError,
@@ -117,7 +122,10 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
                         readOnly = true
                     )
                     IconButton(onClick = { datePickerDialog.show() }) {
-                        Icon(imageVector = Icons.Filled.DateRange, contentDescription = "Select Date")
+                        Icon(imageVector = Icons.Filled.DateRange, contentDescription = stringResource(
+                            R.string.select_date_lebel
+                        )
+                        )
                     }
                 }
 
@@ -126,7 +134,7 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .shadow(elevation = 6.dp),
+                        .shadow(elevation = 10.dp),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     ExposedDropdownMenuBox(
@@ -190,7 +198,7 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
 
                 ) {
                 Text(
-                    text = "Save",
+                    text = stringResource(R.string.save_button_text),
                     modifier = Modifier,
                     fontSize = 16.sp,
                     color = Color.White

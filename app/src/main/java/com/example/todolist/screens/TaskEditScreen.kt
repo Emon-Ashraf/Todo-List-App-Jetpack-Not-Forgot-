@@ -13,9 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.todolist.R
 import com.example.todolist.data.Priority
 import com.example.todolist.data.Task
 import com.example.todolist.viewmodel.TaskViewModel
@@ -48,10 +50,13 @@ fun TaskEditScreen(navController: NavController, taskViewModel: TaskViewModel, t
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Edit Task") },
+                title = { Text(stringResource(R.string.edit_task_level)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = stringResource(
+                            R.string.back
+                        )
+                        )
                     }
                 }
             )
@@ -68,7 +73,7 @@ fun TaskEditScreen(navController: NavController, taskViewModel: TaskViewModel, t
                 TextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Title") },
+                    label = { Text(stringResource(R.string.title_lebel)) },
                     modifier = Modifier
                         .fillMaxWidth(),
                     colors = TextFieldDefaults.colors(
@@ -87,7 +92,7 @@ fun TaskEditScreen(navController: NavController, taskViewModel: TaskViewModel, t
                         descriptionLength = it.length
                         showError = descriptionLength > 50
                     },
-                    label = { Text("Description") },
+                    label = { Text(stringResource(R.string.description_lebel)) },
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 4,
                     isError = showError,
@@ -107,7 +112,7 @@ fun TaskEditScreen(navController: NavController, taskViewModel: TaskViewModel, t
                     TextField(
                         value = deadline,
                         onValueChange = { deadline = it },
-                        label = { Text("Deadline") },
+                        label = { Text(stringResource(R.string.deadline_lebel)) },
                         modifier = Modifier.weight(1f),
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Color.Transparent,
@@ -118,7 +123,10 @@ fun TaskEditScreen(navController: NavController, taskViewModel: TaskViewModel, t
                         readOnly = true
                     )
                     IconButton(onClick = { datePickerDialog.show() }) {
-                        Icon(imageVector = Icons.Filled.DateRange, contentDescription = "Select Date")
+                        Icon(imageVector = Icons.Filled.DateRange, contentDescription = stringResource(
+                            R.string.select_date_lebel
+                        )
+                        )
                     }
                 }
 

@@ -155,7 +155,7 @@ fun getColorBasedOnPriority(priority: Priority?): Color {
     return when (priority) {
         Priority.IMPORTANT -> Color.Red
         Priority.NORMAL -> Color.Green
-        Priority.NOT_IMPORTANT -> Color.Yellow
+        Priority.NOT_IMPORTANT -> Color(0xFFFFD130) //from figma
         Priority.SOME_DAY -> Color.Blue
         else -> Color.Gray
     }

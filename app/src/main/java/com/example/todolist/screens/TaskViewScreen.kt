@@ -1,7 +1,10 @@
 package com.example.todolist.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -11,13 +14,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Fill
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.todolist.R
 import com.example.todolist.data.Priority
 import com.example.todolist.data.Task
 
@@ -45,7 +58,7 @@ fun TaskViewScreen(task: Task, navController: NavController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                    .padding(bottom = 32.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -58,11 +71,11 @@ fun TaskViewScreen(task: Task, navController: NavController) {
                     horizontalAlignment = Alignment.End
                 ) {
                     IconButton(onClick = { navController.navigate("task_edit/${task.id}") }) {
-                        Icon(imageVector = Icons.Filled.Edit, contentDescription = "Edit Task")
+                        Icon(imageVector = Icons.Filled.Edit, contentDescription = stringResource(R.string.edit_task))
                     }
                     Text(
-                        text = if (task.isCompleted) "Completed" else "Incomplete",
-                        color = if (task.isCompleted) Color.Green else Color.Red,
+                        text = if (task.isCompleted) stringResource(R.string.completed_status) else stringResource(R.string.incomplete_status),
+                        color = if (task.isCompleted) Color(0xFF69B76C) else Color.Red,
                         fontSize = 16.sp
                     )
                 }
@@ -71,16 +84,15 @@ fun TaskViewScreen(task: Task, navController: NavController) {
             Text(
                 text = task.description,
                 fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 32.dp)
             )
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(
-                    imageVector = Icons.Filled.DateRange,
+                Image(
+                    painter = painterResource(id = R.drawable.clock_icon),
                     contentDescription = "Deadline",
                     modifier = Modifier.size(24.dp)
                 )
@@ -89,43 +101,35 @@ fun TaskViewScreen(task: Task, navController: NavController) {
                     text = "Before ${task.deadline}",
                     fontSize = 16.sp
                 )
-            }
-            if (task.priority != null) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    val priorityColor = getColorBasedOnPriority(task.priority)
-                    Box(
-                        modifier = Modifier
-                            .size(12.dp)
-                            .background(priorityColor, shape = RoundedCornerShape(2.dp))
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = task.priority.displayName,
-                        color = priorityColor,
-                        fontSize = 16.sp,
-                        modifier = Modifier
-                            .background(priorityColor.copy(alpha = 0.1f), shape = RoundedCornerShape(4.dp))
-                            .padding(4.dp)
-                    )
+                Spacer(modifier = Modifier.width(66.dp))
+                if (task.priority != null) {
+                    PriorityTag(priority = task.priority)
                 }
             }
         }
     }
 }
 
-fun getColorBasedOnPriority(priority: Priority): Color {
-    return when (priority) {
-        Priority.IMPORTANT -> Color.Red
-        Priority.NORMAL -> Color.Green
-        Priority.NOT_IMPORTANT -> Color.Yellow
-        Priority.SOME_DAY -> Color.Blue
+@Composable
+fun PriorityTag(priority: Priority) {
+    val color = getColorBasedOnPriority(priority)
+
+    Box(
+        modifier = Modifier
+            .background(color, shape = CutCornerShape(topStart = 14.dp, bottomStart = 14.dp,))
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .padding(start = 8.dp)
+    ) {
+        Text(
+            text = priority.displayName,
+            color = Color.White,
+            fontSize = 16.sp
+        )
     }
 }
+
+
+
 
 @Preview(showBackground = true)
 @Composable
