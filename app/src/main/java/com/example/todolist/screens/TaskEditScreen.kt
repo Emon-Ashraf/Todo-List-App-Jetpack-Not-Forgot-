@@ -90,7 +90,7 @@ fun TaskEditScreen(navController: NavController, taskViewModel: TaskViewModel, t
                     onValueChange = {
                         description = it
                         descriptionLength = it.length
-                        showError = descriptionLength > 50
+                        showError = descriptionLength > 120
                     },
                     label = { Text(stringResource(R.string.description_lebel)) },
                     modifier = Modifier.fillMaxWidth(),
@@ -98,9 +98,9 @@ fun TaskEditScreen(navController: NavController, taskViewModel: TaskViewModel, t
                     isError = showError,
                     supportingText = {
                         if (showError) {
-                            Text(text = "Exceeded limit by ${descriptionLength - 50} characters")
+                            Text(text = "Exceeded limit by ${descriptionLength - 120} characters")
                         } else {
-                            Text(text = "$descriptionLength/50")
+                            Text(text = "$descriptionLength/120")
                         }
                     }
                 )

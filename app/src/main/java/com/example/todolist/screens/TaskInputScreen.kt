@@ -89,7 +89,7 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
                     onValueChange = {
                         description = it
                         descriptionLength = it.length
-                        showError = descriptionLength > 50
+                        showError = descriptionLength > 120
                     },
                     label = { Text(stringResource(R.string.description_lebel)) },
                     modifier = Modifier.fillMaxWidth(),
@@ -97,9 +97,9 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
                     isError = showError,
                     supportingText = {
                         if (showError) {
-                            Text(text = "Exceeded limit by ${descriptionLength - 50} characters")
+                            Text(text = "Exceeded limit by ${descriptionLength - 120} characters")
                         } else {
-                            Text(text = "$descriptionLength/50")
+                            Text(text = "$descriptionLength/120")
                         }
                     }
                 )
