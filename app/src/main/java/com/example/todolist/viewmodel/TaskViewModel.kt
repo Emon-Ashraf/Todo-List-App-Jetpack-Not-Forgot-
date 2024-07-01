@@ -23,7 +23,7 @@ class TaskViewModel : ViewModel() {
 
     fun updateTask(task: Task) {
         repository.updateTask(task)
-        _tasks.value = repository.getTasks()
+        _tasks.value = _tasks.value?.map { if (it.id == task.id) task else it }
     }
 
     fun deleteTask(task: Task) {
