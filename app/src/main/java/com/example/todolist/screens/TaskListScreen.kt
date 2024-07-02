@@ -21,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -109,6 +111,14 @@ fun TaskRow(task: Task, navController: NavController, taskViewModel: TaskViewMod
     val color = getColorBasedOnPriority(task.priority)
     var isChecked by remember { mutableStateOf(task.isCompleted) }
 
+    // Set the maximum number of characters you want to display in the description
+    val maxDescriptionLength = 28
+    val displayedDescription = if (task.description.length > maxDescriptionLength) {
+        task.description.take(maxDescriptionLength) + "..."
+    } else {
+        task.description
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -127,11 +137,14 @@ fun TaskRow(task: Task, navController: NavController, taskViewModel: TaskViewMod
             Column {
                 Text(
                     text = task.title,
-                    color = Color.White
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = task.description,
-                    color = Color.White
+                    text = displayedDescription,
+                    color = Color.White,
+                    fontSize = 18.sp,
                 )
             }
             Checkbox(
