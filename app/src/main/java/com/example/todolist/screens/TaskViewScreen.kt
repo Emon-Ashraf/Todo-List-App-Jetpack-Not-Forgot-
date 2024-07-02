@@ -101,18 +101,19 @@ fun TaskViewScreen(task: Task, navController: NavController) {
                     text = "Before ${task.deadline}",
                     fontSize = 16.sp
                 )
-                Spacer(modifier = Modifier.width(66.dp))
-                if (task.priority != null) {
-                    PriorityTag(priority = task.priority)
-                }
+                Spacer(modifier = Modifier.width(78.dp))
+
+                Tag()
+
             }
         }
     }
 }
 
 @Composable
-fun PriorityTag(priority: Priority) {
-    val color = getColorBasedOnPriority(priority)
+fun Tag(/*priority: Priority*/) {
+    //val color = getColorBasedOnPriority(priority)
+    val color = Color.Red
 
     Box(
         modifier = Modifier
@@ -121,7 +122,8 @@ fun PriorityTag(priority: Priority) {
             .padding(start = 8.dp)
     ) {
         Text(
-            text = priority.displayName,
+            //text = priority.displayName,
+            text = "Quickly",
             color = Color.White,
             fontSize = 16.sp
         )
