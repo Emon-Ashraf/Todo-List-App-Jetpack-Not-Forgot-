@@ -1,5 +1,6 @@
 package com.example.todolist.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -180,23 +181,28 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
 
             Button(
                 onClick = {
-                    val newTask = Task(
-                        id = UUID.randomUUID().toString(),
-                        title = title,
-                        description = description,
-                        deadline = deadline,
-                        priority = priority
-                    )
-                    taskViewModel.addTask(newTask)
-                    navController.popBackStack()
-                    // Show success toast
+                    if (title.isBlank() || description.isBlank() || deadline.isBlank()) {
+                        // Show toast indicating missing fields
+                        Toast.makeText(context, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val newTask = Task(
+                            id = UUID.randomUUID().toString(),
+                            title = title,
+                            description = description,
+                            deadline = deadline,
+                            priority = priority ?: Priority.NORMAL
+                        )
+                        taskViewModel.addTask(newTask)
+                        navController.popBackStack()
+                        // Show success toast
+                        Toast.makeText(context, "Task added successfully!", Toast.LENGTH_SHORT).show()
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(Color.Black),
                 modifier = Modifier
                     .padding(12.dp)
                     .fillMaxWidth(),
-
-                ) {
+            ) {
                 Text(
                     text = stringResource(R.string.save_button_text),
                     modifier = Modifier,
@@ -204,6 +210,7 @@ fun TaskInputScreen(navController: NavController, taskViewModel: TaskViewModel) 
                     color = Color.White
                 )
             }
+
         }
     }
 }

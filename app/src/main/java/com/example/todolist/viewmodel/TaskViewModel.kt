@@ -13,22 +13,26 @@ class TaskViewModel : ViewModel() {
     val tasks: LiveData<List<Task>> get() = _tasks
 
     init {
+        loadTasks()
+    }
+
+    private fun loadTasks() {
         _tasks.value = repository.getTasks()
     }
 
     fun addTask(task: Task) {
         repository.addTask(task)
-        _tasks.value = repository.getTasks()
+        loadTasks()
     }
 
     fun updateTask(task: Task) {
         repository.updateTask(task)
-        _tasks.value = _tasks.value?.map { if (it.id == task.id) task else it }
+        loadTasks()
     }
 
     fun deleteTask(task: Task) {
         repository.deleteTask(task)
-        _tasks.value = repository.getTasks()
+        loadTasks()
     }
 
     fun getTaskById(taskId: String): Task? {
